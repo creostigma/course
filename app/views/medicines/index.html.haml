@@ -1,0 +1,33 @@
+%h1 Listing medicines
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Max count
+      %th Notation
+      %th Count
+      %th Manufacturer
+      %th Perm
+      %th Price
+      %th
+      %th
+      %th
+
+  %tbody
+    - @medicines.each do |medicine|
+      %tr
+        %td= medicine.name
+        %td= medicine.max_count
+        %td= medicine.notation
+        %td= medicine.count
+        %td= medicine.manufacturer
+        %td= medicine.perm
+        %td= medicine.price
+        %td= link_to 'Show', medicine
+        %td= link_to 'Edit', edit_medicine_path(medicine)
+        %td= link_to 'Destroy', medicine, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Medicine', new_medicine_path

@@ -1,0 +1,25 @@
+%h1 Listing information
+
+%table
+  %thead
+    %tr
+      %th Pharmacy
+      %th Medicine
+      %th Amount
+      %th
+      %th
+      %th
+
+  %tbody
+    - @information.each do |information|
+      %tr
+        %td= information.pharmacy_id
+        %td= information.medicine_id
+        %td= information.amount
+        %td= link_to 'Show', information
+        %td= link_to 'Edit', edit_information_path(information)
+        %td= link_to 'Destroy', information, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Information', new_information_path

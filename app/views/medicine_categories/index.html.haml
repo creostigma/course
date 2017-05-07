@@ -1,0 +1,23 @@
+%h1 Listing medicine_categories
+
+%table
+  %thead
+    %tr
+      %th Medicine
+      %th Category
+      %th
+      %th
+      %th
+
+  %tbody
+    - @medicine_categories.each do |medicine_category|
+      %tr
+        %td= medicine_category.medicine_id
+        %td= medicine_category.category_id
+        %td= link_to 'Show', medicine_category
+        %td= link_to 'Edit', edit_medicine_category_path(medicine_category)
+        %td= link_to 'Destroy', medicine_category, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Medicine category', new_medicine_category_path

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Number:
+  = @pharmacy.number
+%p
+  %b Address:
+  = @pharmacy.address
+%p
+  %b Subway:
+  = @pharmacy.subway
+
+= link_to 'Edit', edit_pharmacy_path(@pharmacy)
+\|
+= link_to 'Back', pharmacies_path

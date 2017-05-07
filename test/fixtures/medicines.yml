@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  max_count: 1.5
+  notation: MyString
+  count: 1
+  manufacturer: MyString
+  perm: 1
+  price: 1.5
+
+two:
+  name: MyString
+  max_count: 1.5
+  notation: MyString
+  count: 1
+  manufacturer: MyString
+  perm: 1
+  price: 1.5

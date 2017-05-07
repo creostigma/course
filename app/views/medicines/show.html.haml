@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @medicine.name
+%p
+  %b Max count:
+  = @medicine.max_count
+%p
+  %b Notation:
+  = @medicine.notation
+%p
+  %b Count:
+  = @medicine.count
+%p
+  %b Manufacturer:
+  = @medicine.manufacturer
+%p
+  %b Perm:
+  = @medicine.perm
+%p
+  %b Price:
+  = @medicine.price
+
+= link_to 'Edit', edit_medicine_path(@medicine)
+\|
+= link_to 'Back', medicines_path

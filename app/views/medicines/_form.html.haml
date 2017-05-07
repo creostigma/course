@@ -1,0 +1,31 @@
+= form_for @medicine do |f|
+  - if @medicine.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@medicine.errors.count, "error")} prohibited this medicine from being saved:"
+      %ul
+        - @medicine.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :max_count
+    = f.text_field :max_count
+  .field
+    = f.label :notation
+    = f.select "notation", options_for_select([ ['В штуках', 'number'], ['Объём', 'volume'] ], selected: @medicine.notation)
+  .field
+    = f.label :count
+    = f.number_field :count
+  .field
+    = f.label :manufacturer
+    = f.text_field :manufacturer
+  .field
+    = f.label :perm
+    = f.select :perm, options_for_select([['Да', 1], ['Нет', 2]], selected: @medicine.perm)
+  .field
+    = f.label :price
+    = f.text_field :price
+  .actions
+    = f.submit 'Save'
