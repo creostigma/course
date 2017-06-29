@@ -1,0 +1,6 @@
+.col-md-6
+  .panel.panel-info
+    .panel-heading
+      Выбрать лекарство
+    .panel-body#select_medicine
+      = select(:information, :medicine_id, Medicine.all.collect {|p| [ p.name, p.id ] }, { include_blank: true }, :data => {'style' => "btn-primary"}, :class => 'form-control')

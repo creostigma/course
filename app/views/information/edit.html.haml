@@ -1,7 +1,13 @@
-%h1 Editing information
+=breadcrumb_tag do
+  %li
+    = link_to t('app.administration'), root_path
+  %li
+    = link_to t('app.information.index'), information_index_path
+  %li.active
+    = link_to (t('app.pharmacies.once') + ' №' + @information.pharmacy.number.to_s + ' - ' +  @information.medicine.name.to_s),  information_path
+%br
+%br
 
 = render 'form'
 
-= link_to 'Show', @information
-\|
-= link_to 'Back', information_index_path
+

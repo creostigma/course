@@ -1,0 +1,171 @@
+=breadcrumb_tag do
+  %li
+    = link_to t('app.administration'), root_path
+  %li
+    = t('app.medicines.index')
+  %li.active
+    = t('headers.medicines.search')
+
+%br
+%br
+
+= form_tag search_medicines_path(), method: :get do
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          = t('search.bymedicine')
+        .panel-body
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:name)
+              .col-md-8
+                = text_field_tag 'search[name]', params['search']['name'], class: 'form-control'
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:max_count)
+              .col-md-8
+                = text_field_tag 'search[max_count]', params['search']['max_count'], class: 'form-control'
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:notation)
+              .col-md-8
+                = select_tag 'search[notation]', options_for_select((Medicine.all.map{|x| [x.notation, x.notation]}.sort), @notation), {include_blank: true, class: 'form-control'}
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:manufacturer)
+              .col-md-8
+                = text_field_tag 'search[manufacturer]', params['search']['manufacturer'], class: 'form-control'
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:perm)
+              .col-md-8
+                = select_tag 'search[perm]', options_for_select((Medicine.all.map{|x| [x.perm, x.perm]}.sort), @perm), {include_blank: true, class: 'form-control'}
+          .form-group
+            .row
+              .col-md-4
+                = Medicine.human_attribute_name(:price)
+              .col-md-8
+                .row
+                  .col-md-6
+                    = text_field_tag 'search[price_from]', params['search']['price_from'], class: 'form-control', placeholder: t('search.from')
+                  .col-md-6
+                    = text_field_tag 'search[price_to]', params['search']['price_to'], class: 'form-control', placeholder: t('search.to')
+  -#
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          = t('search.bycategory')
+        .panel-body
+          .form-group
+            .row
+              .col-md-4
+                = MedicineCategory.human_attribute_name(:category)
+              .col-md-8
+                = select_tag 'search[category]', options_for_select((MedicineCategory.all.map{|x| [x.category.name, x.category_id]}.sort), @category), {include_blank: true, class: 'form-control'}
+
+  .row
+  -#
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          = t('search.bypharmacy')
+        .panel-body
+          .form-group
+            .row
+              .col-md-4
+                = Pharmacy.human_attribute_name(:number)
+              .col-md-8
+                = select_tag 'search[number]', options_for_select((Pharmacy.all.map{|x| [x.number, x.number]}.uniq.sort), @number),{include_blank: true, class: 'form-control'}
+          .form-group
+            .row
+              .col-md-4
+                = Pharmacy.human_attribute_name(:address)
+              .col-md-8
+                = select_tag 'search[address]', options_for_select((Pharmacy.all.map{|x| [x.address, x.address]}.uniq.sort), @address),{include_blank: true, class: 'form-control'}
+          .form-group
+            .row
+              .col-md-4
+                = Pharmacy.human_attribute_name(:subway)
+              .col-md-8
+                = select_tag 'search[address]', options_for_select((Pharmacy.all.map{|x| [x.subway, x.subway]}.uniq.sort), @subway),{include_blank: true, class: 'form-control'}
+    
+  .actions
+    = submit_tag t('buttons.search'), class: 'btn btn-primary', id: 'search-button'
+
+
+- if @medicines.size > 0
+  .page-header
+    %h1= t('search.found') + ": " + @medicines.size.to_s
+  
+  %table.table-responsive
+    %tr
+      - @medicines.each do |medicine|
+        %td
+          .panel.panel-success
+            .panel-heading
+              = medicine.name
+            .panel-body
+              %table.table.table-striped.table-condensed.table-hover
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:max_count)
+                  %td
+                    = medicine.max_count
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:notation)
+                  %td
+                    = medicine.notation == '  volume' ? 'обьем' : 'штук'
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:count)
+                  %td
+                    = medicine.count
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:manufacturer)
+                  %td
+                    = medicine.manufacturer
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:perm)
+                  %td
+                    = medicine.perm == 1 ? 'Да' : 'Нет'
+                %tr
+                  %td
+                    = Medicine.human_attribute_name(:price)
+                  %td
+                    = medicine.price
+              %table.table.table-striped.table-condensed.table-hover
+                - medicine.informations.each do |info|
+                  %thead
+                    %tr
+                      %th{colspan: "2"}
+                        = t('app.pharmacies.once') + " № " + info.pharmacy.number.to_s
+                  %tbody
+                    %tr
+                      %td
+                        = Pharmacy.human_attribute_name(:address)
+                      %td
+                        = info.pharmacy.address
+                    %tr
+                      %td
+                        = Pharmacy.human_attribute_name(:subway)
+                      %td
+                        = info.pharmacy.subway
+              %table.table.table-striped.table-condensed.table-hover
+                %thead
+                  %tr
+                    %th{colspan: "2"}
+                      = t('app.categories.many')
+                %tbody
+                  - medicine.categories.each do |category|
+                    %tr
+                      %td{colspan: "2"}
+                        = category.name

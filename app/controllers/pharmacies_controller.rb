@@ -1,5 +1,6 @@
 class PharmaciesController < ApplicationController
   before_action :set_pharmacy, only: [:show, :edit, :update, :destroy]
+  before_action -> {check_permissions('admin', 'operator')}, except: [:show, :index]
 
   # GET /pharmacies
   # GET /pharmacies.json

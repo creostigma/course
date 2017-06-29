@@ -6,7 +6,7 @@ $sidebar-link-hover-bg: $light_blue
 $sidebar-right-border-color: $dark-blue
 
 #wrapper
-  padding-top: $navbar-height
+  padding-top: 0
   padding-left: 0
   transition: all 0.5s ease
   #sidebar-toggle
@@ -65,7 +65,9 @@ $sidebar-right-border-color: $dark-blue
 
 #page-content-wrapper
   padding: 15px
-
+.lot
+  display: inline-block !important
+  width: $sidebar-width/2 - 10px
 .sidebar-nav
   position: absolute
   top: 0
@@ -162,8 +164,9 @@ $sidebar-right-border-color: $dark-blue
 
     a
       &:hover
-        color: #fff
+        color: #000
         background: none
+    
 
 @media (min-width: $screen-xs)
   #wrapper

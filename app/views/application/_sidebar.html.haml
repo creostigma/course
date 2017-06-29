@@ -1,5 +1,18 @@
 %aside.hidden-print#sidebar-wrapper
   %ul.sidebar-nav
+    %li.sidebar-brand
+      = link_to root_path do
+        = image_tag 'logo.png', alt: t('app.company.short_name')
+        = t('app.name')
+    %li
+      = link_to(login_path, class: 'with-subitems lot') do
+        = @current_user.blank? ? 'войти' : @current_user.email
+      - if @current_user.blank?
+        = link_to(login_path, class: 'with-subitems lot') do
+          = fa_icon 'sign-in', class: 'menu-icon'
+      - else
+        = link_to(logout_path, class: 'with-subitems lot') do
+          = fa_icon 'sign-out', class: 'menu-icon'
     - side_bar_items(@current_role_user).each do |item|
       %li
         - if item.has_key?(:children)
@@ -7,7 +20,8 @@
             = fa_icon(item[:icon], class: 'menu-icon')
             = item[:name]
             %span.pull-right.carret
-              = fa_icon('angle-down', class: 'menu-icon')              
+              = fa_icon('angle-down', class: 'menu-icon')
+        
           %ul.subitems{class: (item[:children].any?{ |subitem| is_open?(subitem[:controller], subitem[:action]) } ? :subopen : :subclose)}
             - item[:children].each do |subitem|
               %li.subitem

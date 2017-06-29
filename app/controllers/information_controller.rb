@@ -1,5 +1,6 @@
 class InformationController < ApplicationController
   before_action :set_information, only: [:show, :edit, :update, :destroy]
+  before_action -> {check_permissions('admin', 'operator')}, except: [:show, :index]
 
   # GET /information
   # GET /information.json
@@ -15,6 +16,15 @@ class InformationController < ApplicationController
   # GET /information/new
   def new
     @information = Information.new
+  end
+  
+  def medicine_new
+    respond_to do |format|
+      format.js do
+        @information = Information.find(params[:id])
+        @information.medicine = Medicine.new
+      end
+    end
   end
 
   # GET /information/1/edit
@@ -69,6 +79,8 @@ class InformationController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def information_params
-      params.require(:information).permit(:pharmacy_id, :medicine_id, :amount)
+      params.require(:information).permit(:pharmacy_id, :medicine_id, :amount, :remove_medicine, :remove_medicine_id, medicine_attributes: [:name, :max_count, :notation, :count, :manufacturer, :perm, :price, :id, medicineCategories_attributes: [:medicine_id, :category_id, :id, :_destroy]
+        ]
+        )
     end
 end

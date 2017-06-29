@@ -1,25 +1,37 @@
-%h1 Listing pharmacies
-
-%table
-  %thead
-    %tr
-      %th Number
-      %th Address
-      %th Subway
-      %th
-      %th
-      %th
-
-  %tbody
-    - @pharmacies.each do |pharmacy|
-      %tr
-        %td= pharmacy.number
-        %td= pharmacy.address
-        %td= pharmacy.subway
-        %td= link_to 'Show', pharmacy
-        %td= link_to 'Edit', edit_pharmacy_path(pharmacy)
-        %td= link_to 'Destroy', pharmacy, method: :delete, data: { confirm: 'Are you sure?' }
-
+=breadcrumb_tag do
+  %li
+    = link_to t('app.administration'), root_path
+  %li.active
+    = t('app.pharmacies.index')
+%br
 %br
 
-= link_to 'New Pharmacy', new_pharmacy_path
+.table-responsive
+  %table.table.table-hover.table-striped
+    %caption
+      = link_to new_pharmacy_path, class: 'btn btn-success' do
+        = fa_icon :plus
+        = t('buttons.new.pharmacy')  
+    %thead
+      %tr
+        %th
+        %th= Pharmacy.human_attribute_name(:number)
+        %th= Pharmacy.human_attribute_name(:address)
+        %th= Pharmacy.human_attribute_name(:subway)
+      
+    %tbody
+      - @pharmacies.each do |pharmacy|
+        %tr
+        %td
+          = link_to pharmacy, class: 'btn btn-success' do
+            = fa_icon :eye
+          %td.center= pharmacy.number
+          %td.center= pharmacy.address
+          %td.center= pharmacy.subway
+          %td.right
+            = link_to edit_pharmacy_path(pharmacy), class: 'btn btn-info' do
+              = fa_icon :edit
+              = t('buttons.edit')
+            = link_to pharmacy, :method => :delete, :data => { :confirm => t('buttons.confirm.information') }, class: 'btn btn-danger' do
+              = fa_icon :times
+              = t('buttons.destroy')

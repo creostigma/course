@@ -1,0 +1,66 @@
+- if (new)
+  - @information.medicine = Medicine.new
+= f.fields_for(:medicine) do |m|
+  .row
+    .panel.panel-info
+      .panel-heading
+        - if (@information.medicine.try(:id) == nil or @information.new_record?)
+          = t('buttons.new.medicine')
+        - else
+          = @information.medicine.name
+          .toright
+            = check_box_tag('remove', 'remove', false)
+            = label_tag('Удалить')
+          = f.hidden_field(:remove_medicine, {value: false})
+          = f.hidden_field(:remove_medicine_id, {value: m.object.id})
+          = f.hidden_field(:relation_count, {value: m.object.informations.size})
+      .panel-body{id: "nested_attributes_#{new.to_s}"}
+        = m.hidden_field(:id)
+        .row
+          .col-md-6
+            .form-group.row
+              .col-md-6
+                = m.label :name
+              .col-md-6
+                = m.text_field :name, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :max_count
+              .col-md-6
+                = m.text_field :max_count, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :notation
+              .col-md-6
+                = m.select :notation, options_for_select([ ['В штуках', 'number'], ['Объём', 'volume'] ], m.object.notation), {include_blank: true}, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :count
+              .col-md-6
+                = m.number_field :count, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :manufacturer
+              .col-md-6
+                = m.text_field :manufacturer, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :perm
+              .col-md-6
+                = m.select :perm, options_for_select([['Да', 1], ['Нет', 2]], m.object.perm), {include_blank: true}, class: 'form-control'
+            .form-group.row
+              .col-md-6
+                = m.label :price
+              .col-md-6
+                = m.text_field :price, class: 'form-control'
+          .col-md-6
+            .categories
+              .col-md-6
+                = t('app.categories.many')
+                .toright
+                  %span.glyphicon.glyphicon-plus
+                - i = 0
+                .form-group
+                  = m.fields_for(:medicineCategories) do |mc|
+                    = render('information/medicine_categories_form', mc: mc)
+

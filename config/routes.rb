@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   resources :medicine_categories
   resources :information
   resources :pharmacies
-  resources :medicines
+  resources :medicines do
+    collection do
+      get :search
+    end
+  end
   resources :categories
   resources :role_users
   resources :roles

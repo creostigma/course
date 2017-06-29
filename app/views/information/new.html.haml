@@ -1,5 +1,13 @@
-%h1 New information
+=breadcrumb_tag do
+  %li
+    = link_to t('app.administration'), root_path
+  %li
+    = link_to t('app.information.index'), information_index_path
+  %li
+    = t('app.information.new')
+%br
+%br
 
 = render 'form'
 
-= link_to 'Back', information_index_path
+

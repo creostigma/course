@@ -1,19 +1,40 @@
 = form_for @information do |f|
-  - if @information.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@information.errors.count, "error")} prohibited this information from being saved:"
-      %ul
-        - @information.errors.full_messages.each do |message|
-          %li= message
+  = error_messages_for @information
+  - if ((@information.medicine.try(:id) != nil) && (@information.medicine.try(:name) != nil))
+    - notnew = render('medicine_form', f: f, new: false)
+  .row
+    .col-md-6
+      .form-group
+        .row
+          .col-md-4
+            = f.label :pharmacy_id
+          .col-md-6
+            = select(:information, :pharmacy_id, Pharmacy.all.collect {|p| [ p.number, p.id ] }, { include_blank: true }, :data => {'style' => "btn-primary"}, :class => 'form-control')
+      .form-group
+        .row
+          .col-md-4
+            = f.label :amount
+          .col-md-6
+            = f.number_field :amount, class: 'form-control'
+      .form-group
+        .row
+          .col-md-4
+            = f.label :medicine_id
+          .col-md-6
+            .row
+              .col-md-6
+                %label
+                  Новое
+                  = check_box_tag(:check_box_new, "new", false, {:data => {:content => "#{render('medicine_form', f: f, new: true)}"}})
+              .col-md-6
+                %label
+                  Выбрать
+                  = check_box_tag(:check_box_select, "select", false, {:data => {:content => "#{render('medicine_select')}"}})
+      #new_or_select_area
+      .form-actions
+        = f.submit nil, class: 'btn btn-primary'
+    .col-md-6
+      = notnew
 
-  .field
-    = f.label :pharmacy_id
-    = f.text_field :pharmacy_id
-  .field
-    = f.label :medicine_id
-    = f.text_field :medicine_id
-  .field
-    = f.label :amount
-    = f.number_field :amount
-  .actions
-    = f.submit 'Save'
+
+ 

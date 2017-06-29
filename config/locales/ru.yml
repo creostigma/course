@@ -1,24 +1,125 @@
 ru:
   app:
+    administration: Администрирование
     name: Базовое приложение
     company:
       short_name: МПУ
       department: Кафедра
+    users:
+      index: Список пользователей
+      new-button: Новый пользователь 
+      edit: Редактирование пользователя
+      new: Создание пользователя
+      load_from_activation_token: Почта успешно подтверждена, аккаунт активирован!
+      create:
+        success: Пользователь успешно создан. Пожалуйста, проверьте свою почту для активации аккаунта!
+      update:
+        success: Пользователь успешно обновлен
+      destroy:
+        success: Пользователь успешно удален
+    roles:
+      index: Список возможных ролей пользователей
+      new-button: Новая роль
+      edit: Редактирование роли
+      new: Создание роли
+      create:
+        success: Роль успешно создана
+      update:
+        success: Роль успешно обновлена
+      destroy:
+        success: Роль успешно удалена
+    categories:
+      many: Категории
+      index: Список категорий
+      edit: Редактирование категории
+      new: Создать категорию
+      remove: Удалить категорию
+      create:
+        success: Категория успешно создана
+      update:
+        success: Категория успешно обновлена
+      destroy:
+        success: Категория успешно удалена
+    medicines:
+      index: Список препаратов
+      edit: Редактирование препарата
+      new: Создать препарат
+      remove: Удалить препарат
+      create:
+        success: Препарат успешно создан
+      update:
+        success: Препарат успешно обновлена
+      destroy:
+        success: Препарат успешно удален
+    pharmacies:
+      index: Список аптек
+      edit: Редактирование аптеки
+      new: Создать аптеку
+      once: Аптека
+      remove: Удалить аптеку
+      create:
+        success: Аптека успешно создана
+      update:
+        success: Аптека успешно обновлена
+      destroy:
+        success: Аптека успешно удалена
+    information:
+      index: Список информационных записей
+      edit: Редатирование информационной записи
+      new: Создать информационную запись
+      remove: Удалить информационную запись
+      create:
+        success: Информационная запись успешно создана
+      update:
+        success: Информационная запись успешно обновлена
+      destroy:
+        success: Информационная запись успешно удалена
+    medicine_categories:
+      index: Список объектов связок
+      edit: Редактировть объект свзяку
+      new: Создать объект связку
+      remove: Удалить объект связку
+      create:
+        success: Объект связка успешно создан 
+      update:
+        success: Объект связка успешно обновлен
+      destroy:
+        success: Объект свзяка успешно удален
   helpers:
     submit:
       create: Сохранить
       submit: Сохранить
       update: Сохранить
   buttons:
+    back: Назад
+    save: Сохранить
     edit: Редактировать
     destroy: Удалить
     show: Показать
+    search: Найти
     confirm:
       user: Действительно удалить пользователя?
       role: Действительно удалить роль?
+      medicine_category: Действительно удалить объект связки?
+      category: Действительно удалить категорию?
+      medicine: Действительно удалить препарат?
+      pharmacy: Действительно удалить аптеку?
+      information: Действительно удалить информационную запись?
     new: 
       user: Новый пользователь
       role: Новая роль
+      medicine_category: Новый объект свзяки
+      category: Новая категория
+      medicine: Новый препарат
+      pharmacy: Новая аптека
+      information: Новая информационная запись
+  search:
+    bymedicine: По свойствам препаратов
+    bycategory: По категориям
+    bypharmacy: По аптекам
+    from: от
+    to: до
+    found: Найдено
   headers:
     users:
       edit: Редактирование пользователя
@@ -28,6 +129,27 @@ ru:
       index: Список возможных ролей пользователей
       edit: Редактирование роли
       new: Новая роль
+    categories:
+      index: Список категорий
+      edit: Редактирование категории
+      new: Создание новой категории
+    medicines:
+      search: Поиск препаратов
+      index: Список препаратов
+      edit: Редактирование препарата
+      new: Создание нового препарата
+    pharmacies:
+      index: Список аптек
+      edit: Редактирование аптеки
+      new: Создание новой аптеки
+    information:
+      index: Список всех информационных записей
+      edit: Редактирование информационной записи
+      new: Создание новой информационной записи
+    medicine_categories:
+      index: Список объектов связки препарат-категория
+      edit: Редактирование объекта связки препарат-категория
+      new: Создание нового объекта связки препарат-категория
   views:
     pagination:
       first: ⇤
@@ -38,6 +160,10 @@ ru:
   activerecord:
     models:
       user: Пользователь
+      category: Категория
+      medicine: Лекарство
+      pharmacy: Аптека
+      information: Информация
     attributes:
       user:
         email: Пользовательское имя/электронная почта
@@ -53,6 +179,27 @@ ru:
         name: Обозначение
         info: Краткое название
         full_info: Описание
+      category:
+        name: Название
+      medicine:
+        name: Название
+        max_count: Предельная дозировка
+        notation: Мера
+        count: Колличество
+        manufacturer: Производитель
+        perm: Выпускается по рецепту
+        price: Цена
+      pharmacy:
+        number: Номер
+        address: Адрес
+        subway: Метро
+      information:
+        pharmacy_id: Аптека
+        medicine_id: Лекарство
+        amount: Количество
+      medicine_category:
+        medicine: Лекарство
+        category: Категория
       # nested_start
       role_user: &role_users
       # nested_finish

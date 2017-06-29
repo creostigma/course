@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :require_login
   before_action :check_app_auth
-
+  
   private
   ## Выбор текущей роли и проверка прав доступа для неё у данного пользователя
   def check_app_auth()
@@ -36,10 +36,21 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  
+
 
   ## Проверка прав доступа выбранной роли для данного метода
   def check_ctr_auth()
     return @current_role_user.try(:is_admin?)
+  end
+  
+  def check_permissions(*roles)
+    unless roles.find{|x| @current_role_user.try("is_#{x}?") }
+     redirect_to(ip_path(
+      bad_action_name: action_name,
+      bad_controller_name: controller_name,
+      bad_user_role: @current_role_user.try(:id)))
+    end
   end
 
   def not_authenticated

@@ -6,6 +6,23 @@ class MedicinesController < ApplicationController
   def index
     @medicines = Medicine.all
   end
+  
+  def search
+    
+    if params.has_key?('search')
+      @medicines = Medicine.search(params['search'])
+    else
+      @medicines = []
+    end
+    
+    params['search'] ||= {}
+    @notation = params.has_key?('search') ? params[:search][:notation] : ""
+    @perm = params.has_key?('search') ? params[:search][:perm] : ""
+    @category = params.has_key?('search') ? params[:search][:category] : ""
+    @number = params.has_key?('search') ? params[:search][:number] : ""
+    @address = params.has_key?('search') ? params[:search][:address] : ""
+    @subway = params.has_key?('search') ? params[:search][:subway] : ""
+  end
 
   # GET /medicines/1
   # GET /medicines/1.json
@@ -69,6 +86,8 @@ class MedicinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medicine_params
-      params.require(:medicine).permit(:name, :max_count, :notation, :count, :manufacturer, :perm, :price)
+      params.require(:medicine).permit(:name, :max_count, :notation, :count, :manufacturer, :perm, :price, 
+        medicine_categories_attributes: [:medicine_id, :category_id, :_destroy]
+        )
     end
 end

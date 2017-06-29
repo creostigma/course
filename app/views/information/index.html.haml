@@ -1,25 +1,40 @@
-%h1 Listing information
-
-%table
-  %thead
-    %tr
-      %th Pharmacy
-      %th Medicine
-      %th Amount
-      %th
-      %th
-      %th
-
-  %tbody
-    - @information.each do |information|
-      %tr
-        %td= information.pharmacy_id
-        %td= information.medicine_id
-        %td= information.amount
-        %td= link_to 'Show', information
-        %td= link_to 'Edit', edit_information_path(information)
-        %td= link_to 'Destroy', information, method: :delete, data: { confirm: 'Are you sure?' }
-
+=breadcrumb_tag do
+  %li
+    = link_to t('app.administration'), root_path
+  %li.active
+    = t('app.information.index')
+%br
 %br
 
-= link_to 'New Information', new_information_path
+.table-responsive
+  %table.table.table-hover.table-striped
+    %caption
+      = link_to new_information_path, class: 'btn btn-success' do
+        = fa_icon :plus
+        = t('buttons.new.information')  
+    %thead
+      %tr
+        %th
+        %th= Information.human_attribute_name(:pharmacy_id)
+        %th= Information.human_attribute_name(:medicine_id)
+        %th= Information.human_attribute_name(:amount)
+        %th
+        
+    %tbody
+      - @information.each do |info|
+        %tr
+          %td
+            = link_to info, class: 'btn btn-success' do
+              = fa_icon :eye
+          %td.center= info.pharmacy.number
+          %td.center= info.medicine.name
+          %td.center= info.amount
+          %td.right
+            = link_to edit_information_path(info), class: 'btn btn-info' do
+              = fa_icon :edit
+              = t('buttons.edit')
+            = link_to info, :method => :delete, 
+            :data => { :confirm => t('buttons.confirm.information') }, 
+            class: 'btn btn-danger' do
+              = fa_icon :times
+              = t('buttons.destroy')

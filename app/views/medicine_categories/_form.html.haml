@@ -1,16 +1,18 @@
 = form_for @medicine_category do |f|
-  - if @medicine_category.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@medicine_category.errors.count, "error")} prohibited this medicine_category from being saved:"
-      %ul
-        - @medicine_category.errors.full_messages.each do |message|
-          %li= message
+  .row
+    .col-md-6
+      .form-group
+        .row
+          .col-md-4
+            = f.label :medicine_id
+          .col-md-6
+            = select(:medicine_category, :medicine_id, Medicine.all.collect {|p| [ p.name, p.id ] }, { include_blank: true }, :data => {'style' => "btn-primary"}, :class => 'form-control')
+      .form-group
+        .row
+          .col-md-4
+            = f.label :category_id
+          .col-md-6
+            = select(:medicine_category, :category_id, Category.all.collect {|p| [ p.name, p.id ] }, { include_blank: true }, :data => {'style' => "btn-primary"}, :class => 'form-control')
 
-  .field
-    = f.label :medicine_id
-    = f.text_field :medicine_id
-  .field
-    = f.label :category_id
-    = f.text_field :category_id
-  .actions
-    = f.submit 'Save'
+  .form-actions
+    = f.submit nil, class: 'btn btn-primary'
